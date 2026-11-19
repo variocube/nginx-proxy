@@ -115,7 +115,7 @@ jobs:
         run: |
           set -euo pipefail
           for p in linux/amd64 linux/arm64; do
-            actual="$(docker run --rm --pull always --platform "$p" "${IMAGE}@${DIGEST}" nginx -v 2>&1)"
+            actual="$(docker run --rm --pull always --platform "$p" "${IMAGE}@${DIGEST}" sh -c 'nginx -v 2>&1')"
             echo "$p: $actual"
             [ "$actual" = "nginx version: nginx/${NGINX_VERSION}" ] \
               || { echo "::error::$p: expected nginx version: nginx/${NGINX_VERSION}"; exit 1; }
